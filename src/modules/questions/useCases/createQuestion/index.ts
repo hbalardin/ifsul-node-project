@@ -1,6 +1,6 @@
 import { QuestionsRepository } from '../../repositories/implementations/QuestionsRepository';
 import { CreateQuestionController } from './CreateQuestionController';
-import { CreateQuestionUseCase } from './createQuestionUseCase';
+import { CreateQuestionUseCase } from './CreateQuestionUseCase';
 
 const questionsRepository = QuestionsRepository.getInstance();
 const createQuestionUseCase = new CreateQuestionUseCase(questionsRepository);

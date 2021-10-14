@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { CreateQuestionUseCase } from './createQuestionUseCase';
+import { CreateQuestionUseCase } from './CreateQuestionUseCase';
 
 class CreateQuestionController {
   constructor(private createQuestionUseCase: CreateQuestionUseCase) {}
