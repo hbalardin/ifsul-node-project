@@ -5,6 +5,8 @@ class Question {
 
   title: string;
 
+  linkedAnswerId?: string;
+
   created_at: Date;
 
   constructor() {

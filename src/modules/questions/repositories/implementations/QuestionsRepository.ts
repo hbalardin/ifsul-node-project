@@ -1,6 +1,7 @@
 import { Question } from '../../model/Question';
 import {
   ICreateQuestionDTO,
+  IFindByLinkedAnswerDTO,
   IQuestionsRepository,
 } from '../IQuestionsRepository';
 
@@ -21,17 +22,26 @@ class QuestionsRepository implements IQuestionsRepository {
     return this.INSTANCE;
   }
 
-  create({ title }: ICreateQuestionDTO): Question {
+  create({ title, linkedAnswerId }: ICreateQuestionDTO): Question {
     const question = new Question();
 
     Object.assign(question, {
       title,
+      linkedAnswerId,
       created_at: new Date(),
     });
 
     this.questions.push(question);
 
     return question;
+  }
+
+  findByLinkedAnswer({
+    linkedAnswerId,
+  }: IFindByLinkedAnswerDTO): Question | undefined {
+    return this.questions.find(
+      (question) => question.linkedAnswerId === linkedAnswerId
+    );
   }
 
   listAll(): Question[] {
