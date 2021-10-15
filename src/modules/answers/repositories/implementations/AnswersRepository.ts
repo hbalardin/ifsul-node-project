@@ -25,7 +25,7 @@ class AnswersRepository implements IAnswersRepository {
       title,
       description,
       created_at: new Date(),
-      questionId,
+      question_id: questionId,
     });
 
     this.answers.push(answer);
@@ -35,6 +35,10 @@ class AnswersRepository implements IAnswersRepository {
 
   listAll(): Answer[] {
     return this.answers;
+  }
+
+  listByQuestion(questionId: string): Answer[] {
+    return this.answers.filter((answer) => answer.question_id === questionId);
   }
 }
 
