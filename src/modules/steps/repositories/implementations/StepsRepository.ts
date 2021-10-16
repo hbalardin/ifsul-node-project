@@ -1,5 +1,10 @@
 import { Step } from '../../model/Step';
-import { ICreateStepDTO, IStepsRepository } from '../IStepsRepository';
+import {
+  ICreateStepDTO,
+  IFindByIdDTO,
+  IStepsRepository,
+  IUpdateStepDTO,
+} from '../IStepsRepository';
 
 class StepsRepository implements IStepsRepository {
   private steps: Step[];
@@ -28,6 +33,22 @@ class StepsRepository implements IStepsRepository {
     });
 
     this.steps.push(step);
+
+    return step;
+  }
+
+  findById({ id }: IFindByIdDTO): Step | undefined {
+    return this.steps.find((step) => step.id === id);
+  }
+
+  update({ id, answerId, nextStepId }: IUpdateStepDTO): Step {
+    const step = this.findById({ id });
+
+    Object.assign(step, {
+      answer_id: answerId,
+      next_step_id: nextStepId,
+      updated_at: new Date(),
+    });
 
     return step;
   }

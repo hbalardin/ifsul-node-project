@@ -9,7 +9,11 @@ class Step {
 
   answer_id?: string;
 
+  next_step_id?: string;
+
   created_at: Date;
+
+  updated_at: Date;
 
   constructor() {
     if (!this.id) this.id = uuidV4();

@@ -5,8 +5,20 @@ interface ICreateStepDTO {
   questionId: string;
 }
 
-interface IStepsRepository {
-  create({ questionId, registerId }: ICreateStepDTO): Step;
+interface IFindByIdDTO {
+  id: string;
 }
 
-export { IStepsRepository, ICreateStepDTO };
+interface IUpdateStepDTO {
+  id: string;
+  answerId: string;
+  nextStepId?: string;
+}
+
+interface IStepsRepository {
+  create({ questionId, registerId }: ICreateStepDTO): Step;
+  findById({ id }: IFindByIdDTO): Step;
+  update({ id, answerId, nextStepId }: IUpdateStepDTO): Step;
+}
+
+export { IStepsRepository, ICreateStepDTO, IUpdateStepDTO, IFindByIdDTO };
