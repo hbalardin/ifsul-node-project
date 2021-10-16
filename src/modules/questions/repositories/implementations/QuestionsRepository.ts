@@ -27,7 +27,7 @@ class QuestionsRepository implements IQuestionsRepository {
 
     Object.assign(question, {
       title,
-      linkedAnswerId,
+      linked_answer_id: linkedAnswerId,
       created_at: new Date(),
     });
 
@@ -40,7 +40,7 @@ class QuestionsRepository implements IQuestionsRepository {
     linkedAnswerId,
   }: IFindByLinkedAnswerDTO): Question | undefined {
     return this.questions.find(
-      (question) => question.linkedAnswerId === linkedAnswerId
+      (question) => question.linked_answer_id === linkedAnswerId
     );
   }
 
