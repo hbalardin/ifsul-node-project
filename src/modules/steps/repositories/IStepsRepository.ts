@@ -18,6 +18,7 @@ interface IUpdateStepDTO {
 interface IStepsRepository {
   create({ questionId, registerId }: ICreateStepDTO): Step;
   findById({ id }: IFindByIdDTO): Step;
+  listAll(): Step[];
   update({ id, answerId, nextStepId }: IUpdateStepDTO): Step;
 }
 

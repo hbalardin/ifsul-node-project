@@ -41,6 +41,10 @@ class StepsRepository implements IStepsRepository {
     return this.steps.find((step) => step.id === id);
   }
 
+  listAll(): Step[] {
+    return this.steps;
+  }
+
   update({ id, answerId, nextStepId }: IUpdateStepDTO): Step {
     const step = this.findById({ id });
 
