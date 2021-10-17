@@ -6,10 +6,15 @@ interface ICreateAnswerDTO {
   questionId: string;
 }
 
+interface IFindByIdDTO {
+  id: string;
+}
+
 interface IAnswersRepository {
   create({ title, description, questionId }: ICreateAnswerDTO): Answer;
+  findById({ id }: IFindByIdDTO): Answer | undefined;
   listAll(): Answer[];
   listByQuestion(questionId: string): Answer[];
 }
 
-export { IAnswersRepository, ICreateAnswerDTO };
+export { IAnswersRepository, ICreateAnswerDTO, IFindByIdDTO };

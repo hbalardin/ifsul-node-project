@@ -1,5 +1,9 @@
 import { Answer } from '../../model/Answer';
-import { ICreateAnswerDTO, IAnswersRepository } from '../IAnswersRepository';
+import {
+  ICreateAnswerDTO,
+  IAnswersRepository,
+  IFindByIdDTO,
+} from '../IAnswersRepository';
 
 class AnswersRepository implements IAnswersRepository {
   private answers: Answer[];
@@ -31,6 +35,10 @@ class AnswersRepository implements IAnswersRepository {
     this.answers.push(answer);
 
     return answer;
+  }
+
+  findById({ id }: IFindByIdDTO): Answer | undefined {
+    return this.answers.find((answer) => answer.id === id);
   }
 
   listAll(): Answer[] {
