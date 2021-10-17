@@ -29,6 +29,10 @@ class RegistersRepository implements IRegistersRepository {
 
     return register;
   }
+
+  listAll(): Register[] {
+    return this.registers;
+  }
 }
 
 export { RegistersRepository };
