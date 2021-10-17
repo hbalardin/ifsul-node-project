@@ -5,7 +5,7 @@ class Question {
 
   title: string;
 
-  linkedAnswerId?: string;
+  linked_answer_id?: string;
 
   created_at: Date;
 
