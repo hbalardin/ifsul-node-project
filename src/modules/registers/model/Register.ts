@@ -1,11 +1,9 @@
 import { v4 as uuidV4 } from 'uuid';
 
-class Question {
+class Register {
   id: string;
 
-  title: string;
-
-  linked_answer_id?: string;
+  customer_id?: string;
 
   created_at: Date;
 
@@ -14,4 +12,4 @@ class Question {
   }
 }
 
-export { Question };
+export { Register };
