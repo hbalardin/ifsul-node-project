@@ -4,5 +4,5 @@
   "host": "localhost",
   "username": "docker",
   "password": "ifsul",
-  "database": "ifsul_node_project"
+  "database": "ifsul_postgres_database"
 }

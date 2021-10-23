@@ -10,7 +10,7 @@ services:
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=ifsul
-      - POSTGRES_DB=ifsul_node_project
+      - POSTGRES_DB=ifsul_postgres_database
     volumes:
       - pgdata:/data/postgres
   app:
