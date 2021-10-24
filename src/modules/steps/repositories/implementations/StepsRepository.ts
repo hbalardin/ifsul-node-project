@@ -37,7 +37,7 @@ class StepsRepository implements IStepsRepository {
   }
 
   async update({ id, answerId, nextStepId }: IUpdateStepDTO): Promise<Step> {
-    const step = this.findById({ id });
+    const step = await this.findById({ id });
 
     const updatedStep = await this.repository.save({
       ...step,
