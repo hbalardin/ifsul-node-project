@@ -2,17 +2,16 @@ import { Router } from 'express';
 
 import {
   CreateAnswerController,
-  listAllAnswersController,
+  ListAllAnswersController,
   listAnswersByQuestionController,
 } from '../modules/answers/useCases';
 
 const answersRoutes = Router();
 
 const createAnswerController = new CreateAnswerController();
+const listAllAnswersController = new ListAllAnswersController();
 
-answersRoutes.get('/', (request, response) => {
-  return listAllAnswersController.handle(request, response);
-});
+answersRoutes.get('/', listAllAnswersController.handle);
 answersRoutes.get('/:questionId', (request, response) => {
   return listAnswersByQuestionController.handle(request, response);
 });
