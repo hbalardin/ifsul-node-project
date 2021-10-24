@@ -1,1 +1,1 @@
-export * from './createRegister';
+export * from './createRegister/CreateRegisterController';

@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { createRegisterController } from '../modules/registers/useCases';
+import { CreateRegisterController } from '../modules/registers/useCases';
 
 const registersRoutes = Router();
 
-registersRoutes.post('/', (request, response) => {
-  return createRegisterController.handle(request, response);
-});
+const createRegisterController = new CreateRegisterController();
+
+registersRoutes.post('/', createRegisterController.handle);
 
 export { registersRoutes };
