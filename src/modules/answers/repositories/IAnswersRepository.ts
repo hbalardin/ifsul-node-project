@@ -10,11 +10,20 @@ interface IFindByIdDTO {
   id: string;
 }
 
+interface IListByQuestionDTO {
+  questionId: string;
+}
+
 interface IAnswersRepository {
   create({ title, description, questionId }: ICreateAnswerDTO): Promise<Answer>;
   findById({ id }: IFindByIdDTO): Promise<Answer | undefined>;
   listAll(): Promise<Answer[]>;
-  listByQuestion(questionId: string): Promise<Answer[]>;
+  listByQuestion({ questionId }: IListByQuestionDTO): Promise<Answer[]>;
 }
 
-export { IAnswersRepository, ICreateAnswerDTO, IFindByIdDTO };
+export {
+  IAnswersRepository,
+  ICreateAnswerDTO,
+  IFindByIdDTO,
+  IListByQuestionDTO,
+};

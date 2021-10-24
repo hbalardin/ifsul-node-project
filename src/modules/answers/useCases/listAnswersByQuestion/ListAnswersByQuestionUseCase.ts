@@ -1,11 +1,21 @@
-import { Answer } from '../../model/Answer';
+import { inject, injectable } from 'tsyringe';
+
+import { Answer } from '../../entities/Answer';
 import { IAnswersRepository } from '../../repositories/IAnswersRepository';
 
-class ListAnswersByQuestionUseCase {
-  constructor(private answersRepository: IAnswersRepository) {}
+interface IRequest {
+  questionId: string;
+}
 
-  execute(questionId: string): Answer[] {
-    const answers = this.answersRepository.listByQuestion(questionId);
+@injectable()
+class ListAnswersByQuestionUseCase {
+  constructor(
+    @inject('AnswersRepository')
+    private answersRepository: IAnswersRepository
+  ) {}
+
+  async execute({ questionId }: IRequest): Promise<Answer[]> {
+    const answers = await this.answersRepository.listByQuestion({ questionId });
     return answers;
   }
 }

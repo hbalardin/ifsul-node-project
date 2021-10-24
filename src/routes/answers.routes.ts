@@ -3,18 +3,17 @@ import { Router } from 'express';
 import {
   CreateAnswerController,
   ListAllAnswersController,
-  listAnswersByQuestionController,
+  ListAnswersByQuestionController,
 } from '../modules/answers/useCases';
 
 const answersRoutes = Router();
 
 const createAnswerController = new CreateAnswerController();
 const listAllAnswersController = new ListAllAnswersController();
+const listAnswersByQuestionController = new ListAnswersByQuestionController();
 
 answersRoutes.get('/', listAllAnswersController.handle);
-answersRoutes.get('/:questionId', (request, response) => {
-  return listAnswersByQuestionController.handle(request, response);
-});
+answersRoutes.get('/:questionId', listAnswersByQuestionController.handle);
 
 answersRoutes.post('/', createAnswerController.handle);
 

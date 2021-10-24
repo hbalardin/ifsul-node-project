@@ -17,9 +17,9 @@ class CreateAnswerUseCase {
   ) {}
 
   async execute({ title, description, questionId }: IRequest): Promise<Answer> {
-    const currentAnswers = await this.answersRepository.listByQuestion(
-      questionId
-    );
+    const currentAnswers = await this.answersRepository.listByQuestion({
+      questionId,
+    });
 
     const answerAlreadyExists = currentAnswers.find(
       (answer) => answer.title === title

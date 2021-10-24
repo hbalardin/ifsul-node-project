@@ -5,6 +5,7 @@ import {
   ICreateAnswerDTO,
   IAnswersRepository,
   IFindByIdDTO,
+  IListByQuestionDTO,
 } from '../IAnswersRepository';
 
 class AnswersRepository implements IAnswersRepository {
@@ -41,7 +42,7 @@ class AnswersRepository implements IAnswersRepository {
     return answers;
   }
 
-  async listByQuestion(questionId: string): Promise<Answer[]> {
+  async listByQuestion({ questionId }: IListByQuestionDTO): Promise<Answer[]> {
     const answers = await this.repository.find({ question_id: questionId });
     return answers;
   }
