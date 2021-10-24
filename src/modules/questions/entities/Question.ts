@@ -1,5 +1,14 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
+
+import { Answer } from '../../answers/model/Answer';
 
 @Entity('questions')
 class Question {
@@ -9,6 +18,11 @@ class Question {
   @Column()
   title: string;
 
+  @OneToOne(() => Answer)
+  @JoinColumn({ name: 'linked_answer_id' })
+  linkedAnswer: Answer;
+
+  @Column()
   linked_answer_id?: string;
 
   @CreateDateColumn()
