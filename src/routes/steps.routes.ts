@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
 import {
-  createStepController,
+  CreateStepController,
   updateStepController,
 } from '../modules/steps/useCases';
 
 const stepsRoutes = Router();
 
-stepsRoutes.post('/', (request, response) => {
-  return createStepController.handle(request, response);
-});
+const createStepController = new CreateStepController();
+
+stepsRoutes.post('/', createStepController.handle);
 
 stepsRoutes.put('/:id', (request, response) => {
   return updateStepController.handle(request, response);

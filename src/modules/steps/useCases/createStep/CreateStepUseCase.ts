@@ -1,4 +1,6 @@
-import { Step } from '../../model/Step';
+import { inject, injectable } from 'tsyringe';
+
+import { Step } from '../../entities/Step';
 import { IStepsRepository } from '../../repositories/IStepsRepository';
 
 interface IRequest {
@@ -6,11 +8,15 @@ interface IRequest {
   questionId: string;
 }
 
+@injectable()
 class CreateStepUseCase {
-  constructor(private stepsRepository: IStepsRepository) {}
+  constructor(
+    @inject('StepsRepository')
+    private stepsRepository: IStepsRepository
+  ) {}
 
-  execute({ registerId, questionId }: IRequest): Step {
-    const step = this.stepsRepository.create({ registerId, questionId });
+  async execute({ registerId, questionId }: IRequest): Promise<Step> {
+    const step = await this.stepsRepository.create({ registerId, questionId });
     return step;
   }
 }

@@ -1,2 +1,2 @@
-export * from './createStep';
+export * from './createStep/CreateStepController';
 export * from './updateStep';
