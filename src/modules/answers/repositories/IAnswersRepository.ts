@@ -1,4 +1,4 @@
-import { Answer } from '../model/Answer';
+import { Answer } from '../entities/Answer';
 
 interface ICreateAnswerDTO {
   title: string;
@@ -11,10 +11,10 @@ interface IFindByIdDTO {
 }
 
 interface IAnswersRepository {
-  create({ title, description, questionId }: ICreateAnswerDTO): Answer;
-  findById({ id }: IFindByIdDTO): Answer | undefined;
-  listAll(): Answer[];
-  listByQuestion(questionId: string): Answer[];
+  create({ title, description, questionId }: ICreateAnswerDTO): Promise<Answer>;
+  findById({ id }: IFindByIdDTO): Promise<Answer | undefined>;
+  listAll(): Promise<Answer[]>;
+  listByQuestion(questionId: string): Promise<Answer[]>;
 }
 
 export { IAnswersRepository, ICreateAnswerDTO, IFindByIdDTO };
