@@ -1,17 +1,18 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import { CreateQuestionFromAnswerUseCase } from './CreateQuestionFromAnswerUseCase';
 
 class CreateQuestionFromAnswerController {
-  constructor(
-    private createQuestionFromAnswerUseCase: CreateQuestionFromAnswerUseCase
-  ) {}
-
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { linkedAnswerId } = request.params;
     const { title } = request.body;
 
-    const question = this.createQuestionFromAnswerUseCase.execute({
+    const createQuestionFromAnswerUseCase = container.resolve(
+      CreateQuestionFromAnswerUseCase
+    );
+
+    const question = await createQuestionFromAnswerUseCase.execute({
       linkedAnswerId,
       title,
     });

@@ -10,7 +10,7 @@ interface IFindByLinkedAnswerDTO {
 }
 
 interface IQuestionsRepository {
-  create({ title }: ICreateQuestionDTO): Promise<Question>;
+  create({ title, linkedAnswerId }: ICreateQuestionDTO): Promise<Question>;
   findByLinkedAnswer({
     linkedAnswerId,
   }: IFindByLinkedAnswerDTO): Promise<Question | undefined>;
