@@ -1,6 +1,8 @@
+import { inject, injectable } from 'tsyringe';
+
 import { IAnswersRepository } from '../../../answers/repositories/IAnswersRepository';
 import { IQuestionsRepository } from '../../../questions/repositories/IQuestionsRepository';
-import { Step } from '../../model/Step';
+import { Step } from '../../entities/Step';
 import { IStepsRepository } from '../../repositories/IStepsRepository';
 
 interface IRequest {
@@ -8,41 +10,46 @@ interface IRequest {
   answerId: string;
 }
 
+@injectable()
 class UpdateStepUseCase {
   constructor(
+    @inject('StepsRepository')
     private stepsRepository: IStepsRepository,
+    @inject('AnswersRepository')
     private answersRepository: IAnswersRepository,
+    @inject('QuestionsRepository')
     private questionsRepository: IQuestionsRepository
   ) {}
 
-  execute({ id, answerId }: IRequest): Step {
-    const existentStep = this.stepsRepository.findById({ id });
+  async execute({ id, answerId }: IRequest): Promise<Step> {
+    const existentStep = await this.stepsRepository.findById({ id });
 
     if (!existentStep) throw new Error('Step does not exists!');
 
-    const selectedAnswer = this.answersRepository.findById({
+    const selectedAnswer = await this.answersRepository.findById({
       id: answerId,
     });
 
     if (!selectedAnswer) throw new Error('Answer does not exists!');
 
-    const nextQuestion = this.questionsRepository.findByLinkedAnswer({
+    const nextQuestion = await this.questionsRepository.findByLinkedAnswer({
       linkedAnswerId: answerId,
     });
 
     let nextStep: Step;
     if (nextQuestion) {
-      nextStep = this.stepsRepository.create({
+      nextStep = await this.stepsRepository.create({
         registerId: existentStep.register_id,
         questionId: nextQuestion.id,
       });
     }
 
-    const updatedStep = this.stepsRepository.update({
+    const updatedStep = await this.stepsRepository.update({
       id,
       answerId,
       nextStepId: nextStep?.id,
     });
+
     return updatedStep;
   }
 }
