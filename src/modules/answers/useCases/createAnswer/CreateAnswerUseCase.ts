@@ -1,4 +1,6 @@
-import { Answer } from '../../model/Answer';
+import { inject, injectable } from 'tsyringe';
+
+import { Answer } from '../../entities/Answer';
 import { IAnswersRepository } from '../../repositories/IAnswersRepository';
 
 interface IRequest {
@@ -7,11 +9,17 @@ interface IRequest {
   questionId: string;
 }
 
+@injectable()
 class CreateAnswerUseCase {
-  constructor(private answersRepository: IAnswersRepository) {}
+  constructor(
+    @inject('AnswersRepository')
+    private answersRepository: IAnswersRepository
+  ) {}
 
-  execute({ title, description, questionId }: IRequest): Answer {
-    const currentAnswers = this.answersRepository.listByQuestion(questionId);
+  async execute({ title, description, questionId }: IRequest): Promise<Answer> {
+    const currentAnswers = await this.answersRepository.listByQuestion(
+      questionId
+    );
 
     const answerAlreadyExists = currentAnswers.find(
       (answer) => answer.title === title
@@ -20,11 +28,12 @@ class CreateAnswerUseCase {
     if (answerAlreadyExists)
       throw new Error('This question already has an answer with this title');
 
-    const answer = this.answersRepository.create({
+    const answer = await this.answersRepository.create({
       title,
       description,
       questionId,
     });
+
     return answer;
   }
 }
