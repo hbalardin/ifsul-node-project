@@ -1,37 +1,26 @@
-import { Register } from '../../model/Register';
+import { getRepository, Repository } from 'typeorm';
+
+import { Register } from '../../entities/Register';
 import { IRegistersRepository } from '../IRegistersRepository';
 
 class RegistersRepository implements IRegistersRepository {
-  private registers: Register[];
+  private repository: Repository<Register>;
 
-  private static INSTANCE: RegistersRepository;
-
-  private constructor() {
-    this.registers = [];
+  constructor() {
+    this.repository = getRepository(Register);
   }
 
-  public static getInstance(): RegistersRepository {
-    if (!RegistersRepository.INSTANCE) {
-      this.INSTANCE = new RegistersRepository();
-    }
+  async create(): Promise<Register> {
+    const register = this.repository.create();
 
-    return this.INSTANCE;
-  }
-
-  create(): Register {
-    const register = new Register();
-
-    Object.assign(register, {
-      created_at: new Date(),
-    });
-
-    this.registers.push(register);
+    await this.repository.save(register);
 
     return register;
   }
 
-  listAll(): Register[] {
-    return this.registers;
+  async listAll(): Promise<Register[]> {
+    const registers = await this.repository.find();
+    return registers;
   }
 }
 
