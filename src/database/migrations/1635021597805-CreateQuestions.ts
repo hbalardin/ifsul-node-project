@@ -16,22 +16,9 @@ export class CreateQuestions1635021597805 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'linked_answer_id',
-            type: 'uuid',
-            isNullable: true,
-          },
-          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
-          },
-        ],
-        foreignKeys: [
-          {
-            name: 'FKAnswerQuestion',
-            referencedTableName: 'answers',
-            referencedColumnNames: ['id'],
-            columnNames: ['linked_answer_id'],
           },
         ],
       })
