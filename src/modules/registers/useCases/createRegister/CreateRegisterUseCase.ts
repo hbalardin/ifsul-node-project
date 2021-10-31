@@ -1,11 +1,17 @@
-import { Register } from '../../model/Register';
+import { inject, injectable } from 'tsyringe';
+
+import { Register } from '../../entities/Register';
 import { IRegistersRepository } from '../../repositories/IRegistersRepository';
 
+@injectable()
 class CreateRegisterUseCase {
-  constructor(private registersRepository: IRegistersRepository) {}
+  constructor(
+    @inject('RegistersRepository')
+    private registersRepository: IRegistersRepository
+  ) {}
 
-  execute(): Register {
-    const register = this.registersRepository.create();
+  async execute(): Promise<Register> {
+    const register = await this.registersRepository.create();
     return register;
   }
 }

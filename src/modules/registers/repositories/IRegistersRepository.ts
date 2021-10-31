@@ -1,8 +1,8 @@
-import { Register } from '../model/Register';
+import { Register } from '../entities/Register';
 
 interface IRegistersRepository {
-  create(): Register;
-  listAll(): Register[];
+  create(): Promise<Register>;
+  listAll(): Promise<Register[]>;
 }
 
 export { IRegistersRepository };

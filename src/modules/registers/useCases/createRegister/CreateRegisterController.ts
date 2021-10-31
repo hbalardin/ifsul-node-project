@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import { CreateRegisterUseCase } from './CreateRegisterUseCase';
 
 class CreateRegisterController {
-  constructor(private createRegisterUseCase: CreateRegisterUseCase) {}
+  async handle(request: Request, response: Response): Promise<Response> {
+    const createRegisterUseCase = container.resolve(CreateRegisterUseCase);
 
-  handle(request: Request, response: Response): Response {
-    const register = this.createRegisterUseCase.execute();
+    const register = await createRegisterUseCase.execute();
 
     return response.json(register);
   }
