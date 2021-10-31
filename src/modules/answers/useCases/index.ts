@@ -1,3 +1,3 @@
-export * from './createAnswer';
-export * from './listAllAnswers';
-export * from './listAnswersByQuestion';
+export * from './createAnswer/CreateAnswerController';
+export * from './listAllAnswers/ListAllAnswersController';
+export * from './listAnswersByQuestion/ListAnswersByQuestionController';

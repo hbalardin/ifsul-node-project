@@ -1,11 +1,17 @@
-import { Answer } from '../../model/Answer';
+import { inject, injectable } from 'tsyringe';
+
+import { Answer } from '../../entities/Answer';
 import { IAnswersRepository } from '../../repositories/IAnswersRepository';
 
+@injectable()
 class ListAllAnswersUseCase {
-  constructor(private answersRepository: IAnswersRepository) {}
+  constructor(
+    @inject('AnswersRepository')
+    private answersRepository: IAnswersRepository
+  ) {}
 
-  execute(): Answer[] {
-    const answers = this.answersRepository.listAll();
+  async execute(): Promise<Answer[]> {
+    const answers = await this.answersRepository.listAll();
     return answers;
   }
 }

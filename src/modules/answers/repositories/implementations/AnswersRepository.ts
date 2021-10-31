@@ -1,52 +1,50 @@
-import { Answer } from '../../model/Answer';
+import { getRepository, Repository } from 'typeorm';
+
+import { Answer } from '../../entities/Answer';
 import {
   ICreateAnswerDTO,
   IAnswersRepository,
   IFindByIdDTO,
+  IListByQuestionDTO,
 } from '../IAnswersRepository';
 
 class AnswersRepository implements IAnswersRepository {
-  private answers: Answer[];
+  private repository: Repository<Answer>;
 
-  private static INSTANCE: AnswersRepository;
-
-  private constructor() {
-    this.answers = [];
+  constructor() {
+    this.repository = getRepository(Answer);
   }
 
-  public static getInstance(): AnswersRepository {
-    if (!AnswersRepository.INSTANCE) {
-      this.INSTANCE = new AnswersRepository();
-    }
-
-    return this.INSTANCE;
-  }
-
-  create({ title, description, questionId }: ICreateAnswerDTO): Answer {
-    const answer = new Answer();
-
-    Object.assign(answer, {
+  async create({
+    title,
+    description,
+    questionId,
+  }: ICreateAnswerDTO): Promise<Answer> {
+    const answer = this.repository.create({
       title,
       description,
-      created_at: new Date(),
       question_id: questionId,
     });
 
-    this.answers.push(answer);
+    await this.repository.save(answer);
 
     return answer;
   }
 
-  findById({ id }: IFindByIdDTO): Answer | undefined {
-    return this.answers.find((answer) => answer.id === id);
+  async findById({ id }: IFindByIdDTO): Promise<Answer | undefined> {
+    const answer = await this.repository.findOne({ id });
+
+    return answer;
   }
 
-  listAll(): Answer[] {
-    return this.answers;
+  async listAll(): Promise<Answer[]> {
+    const answers = await this.repository.find();
+    return answers;
   }
 
-  listByQuestion(questionId: string): Answer[] {
-    return this.answers.filter((answer) => answer.question_id === questionId);
+  async listByQuestion({ questionId }: IListByQuestionDTO): Promise<Answer[]> {
+    const answers = await this.repository.find({ question_id: questionId });
+    return answers;
   }
 }
 
