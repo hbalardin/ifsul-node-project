@@ -1,4 +1,4 @@
-import { Step } from '../model/Step';
+import { Step } from '../entities/Step';
 
 interface ICreateStepDTO {
   registerId: string;
@@ -16,10 +16,10 @@ interface IUpdateStepDTO {
 }
 
 interface IStepsRepository {
-  create({ questionId, registerId }: ICreateStepDTO): Step;
-  findById({ id }: IFindByIdDTO): Step;
-  listAll(): Step[];
-  update({ id, answerId, nextStepId }: IUpdateStepDTO): Step;
+  create({ questionId, registerId }: ICreateStepDTO): Promise<Step>;
+  findById({ id }: IFindByIdDTO): Promise<Step>;
+  listAll(): Promise<Step[]>;
+  update({ id, answerId, nextStepId }: IUpdateStepDTO): Promise<Step>;
 }
 
 export { IStepsRepository, ICreateStepDTO, IUpdateStepDTO, IFindByIdDTO };

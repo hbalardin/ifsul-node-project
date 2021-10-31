@@ -1,4 +1,6 @@
-import { Step } from '../../model/Step';
+import { getRepository, Repository } from 'typeorm';
+
+import { Step } from '../../entities/Step';
 import {
   ICreateStepDTO,
   IFindByIdDTO,
@@ -7,54 +9,43 @@ import {
 } from '../IStepsRepository';
 
 class StepsRepository implements IStepsRepository {
-  private steps: Step[];
+  private repository: Repository<Step>;
 
-  private static INSTANCE: StepsRepository;
-
-  private constructor() {
-    this.steps = [];
+  constructor() {
+    this.repository = getRepository(Step);
   }
 
-  public static getInstance(): StepsRepository {
-    if (!StepsRepository.INSTANCE) {
-      this.INSTANCE = new StepsRepository();
-    }
-
-    return this.INSTANCE;
-  }
-
-  create({ registerId, questionId }: ICreateStepDTO): Step {
-    const step = new Step();
-
-    Object.assign(step, {
+  async create({ registerId, questionId }: ICreateStepDTO): Promise<Step> {
+    const step = this.repository.create({
       register_id: registerId,
       question_id: questionId,
-      created_at: new Date(),
     });
 
-    this.steps.push(step);
+    await this.repository.save(step);
 
     return step;
   }
 
-  findById({ id }: IFindByIdDTO): Step | undefined {
-    return this.steps.find((step) => step.id === id);
+  async findById({ id }: IFindByIdDTO): Promise<Step | undefined> {
+    const step = await this.repository.findOne({ id });
+    return step;
   }
 
-  listAll(): Step[] {
-    return this.steps;
+  async listAll(): Promise<Step[]> {
+    const steps = await this.repository.find();
+    return steps;
   }
 
-  update({ id, answerId, nextStepId }: IUpdateStepDTO): Step {
+  async update({ id, answerId, nextStepId }: IUpdateStepDTO): Promise<Step> {
     const step = this.findById({ id });
 
-    Object.assign(step, {
+    const updatedStep = await this.repository.save({
+      ...step,
       answer_id: answerId,
       next_step_id: nextStepId,
-      updated_at: new Date(),
     });
 
-    return step;
+    return updatedStep;
   }
 }
 

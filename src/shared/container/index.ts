@@ -6,6 +6,8 @@ import { QuestionsRepository } from '../../modules/questions/repositories/implem
 import { IQuestionsRepository } from '../../modules/questions/repositories/IQuestionsRepository';
 import { RegistersRepository } from '../../modules/registers/repositories/implementations/RegistersRepository';
 import { IRegistersRepository } from '../../modules/registers/repositories/IRegistersRepository';
+import { StepsRepository } from '../../modules/steps/repositories/implementations/StepsRepository';
+import { IStepsRepository } from '../../modules/steps/repositories/IStepsRepository';
 
 container.registerSingleton<IQuestionsRepository>(
   'QuestionsRepository',
@@ -20,4 +22,9 @@ container.registerSingleton<IAnswersRepository>(
 container.registerSingleton<IRegistersRepository>(
   'RegistersRepository',
   RegistersRepository
+);
+
+container.registerSingleton<IStepsRepository>(
+  'StepsRepository',
+  StepsRepository
 );

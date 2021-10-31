@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import { UpdateStepUseCase } from './UpdateStepUseCase';
 
 class UpdateStepController {
-  constructor(private updateStepUseCase: UpdateStepUseCase) {}
-
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { answerId } = request.body;
 
-    const step = this.updateStepUseCase.execute({ id, answerId });
+    const updateStepUseCase = container.resolve(UpdateStepUseCase);
+
+    const step = await updateStepUseCase.execute({ id, answerId });
 
     return response.json(step);
   }
