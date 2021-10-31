@@ -1,23 +1,25 @@
 import { Router } from 'express';
 
 import {
-  createQuestionController,
-  listAllQuestionsController,
-  createQuestionFromAnswerController,
+  CreateQuestionController,
+  CreateQuestionFromAnswerController,
+  ListAllQuestionsController,
 } from '../modules/questions/useCases';
 
 const questionsRoutes = Router();
 
-questionsRoutes.get('/', (request, response) => {
-  return listAllQuestionsController.handle(request, response);
-});
+const createQuestionController = new CreateQuestionController();
+const createQuestionFromAnswerController =
+  new CreateQuestionFromAnswerController();
+const listAllQuestionsController = new ListAllQuestionsController();
 
-questionsRoutes.post('/', (request, response) => {
-  return createQuestionController.handle(request, response);
-});
+questionsRoutes.get('/', listAllQuestionsController.handle);
 
-questionsRoutes.post('/:linkedAnswerId', (request, response) => {
-  return createQuestionFromAnswerController.handle(request, response);
-});
+questionsRoutes.post('/', createQuestionController.handle);
+
+questionsRoutes.post(
+  '/:linkedAnswerId',
+  createQuestionFromAnswerController.handle
+);
 
 export { questionsRoutes };

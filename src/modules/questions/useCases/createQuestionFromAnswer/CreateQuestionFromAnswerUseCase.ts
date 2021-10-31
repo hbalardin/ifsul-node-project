@@ -1,4 +1,6 @@
-import { Question } from '../../model/Question';
+import { inject, injectable } from 'tsyringe';
+
+import { Question } from '../../entities/Question';
 import { IQuestionsRepository } from '../../repositories/IQuestionsRepository';
 
 interface IRequest {
@@ -6,17 +8,24 @@ interface IRequest {
   title: string;
 }
 
+@injectable()
 class CreateQuestionFromAnswerUseCase {
-  constructor(private questionsRepository: IQuestionsRepository) {}
+  constructor(
+    @inject('QuestionsRepository')
+    private questionsRepository: IQuestionsRepository
+  ) {}
 
-  execute({ linkedAnswerId, title }: IRequest): Question {
+  async execute({ linkedAnswerId, title }: IRequest): Promise<Question> {
     const hasQuestionLinkedToAnswer =
-      !!this.questionsRepository.findByLinkedAnswer({ linkedAnswerId });
+      await this.questionsRepository.findByLinkedAnswer({ linkedAnswerId });
 
     if (hasQuestionLinkedToAnswer)
       throw new Error('Already exists a question linked to this answer');
 
-    const question = this.questionsRepository.create({ linkedAnswerId, title });
+    const question = await this.questionsRepository.create({
+      linkedAnswerId,
+      title,
+    });
     return question;
   }
 }

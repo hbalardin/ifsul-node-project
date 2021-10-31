@@ -1,4 +1,4 @@
-import { Question } from '../model/Question';
+import { Question } from '../entities/Question';
 
 interface ICreateQuestionDTO {
   title: string;
@@ -10,11 +10,11 @@ interface IFindByLinkedAnswerDTO {
 }
 
 interface IQuestionsRepository {
-  create({ title, linkedAnswerId }: ICreateQuestionDTO): Question;
+  create({ title, linkedAnswerId }: ICreateQuestionDTO): Promise<Question>;
   findByLinkedAnswer({
     linkedAnswerId,
-  }: IFindByLinkedAnswerDTO): Question | undefined;
-  listAll(): Question[];
+  }: IFindByLinkedAnswerDTO): Promise<Question | undefined>;
+  listAll(): Promise<Question[]>;
 }
 
 export { IQuestionsRepository, ICreateQuestionDTO, IFindByLinkedAnswerDTO };

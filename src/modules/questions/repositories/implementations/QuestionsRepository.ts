@@ -1,4 +1,6 @@
-import { Question } from '../../model/Question';
+import { Repository, getRepository } from 'typeorm';
+
+import { Question } from '../../entities/Question';
 import {
   ICreateQuestionDTO,
   IFindByLinkedAnswerDTO,
@@ -6,46 +8,39 @@ import {
 } from '../IQuestionsRepository';
 
 class QuestionsRepository implements IQuestionsRepository {
-  private questions: Question[];
+  private repository: Repository<Question>;
 
-  private static INSTANCE: QuestionsRepository;
-
-  private constructor() {
-    this.questions = [];
+  constructor() {
+    this.repository = getRepository(Question);
   }
 
-  public static getInstance(): QuestionsRepository {
-    if (!QuestionsRepository.INSTANCE) {
-      this.INSTANCE = new QuestionsRepository();
-    }
-
-    return this.INSTANCE;
-  }
-
-  create({ title, linkedAnswerId }: ICreateQuestionDTO): Question {
-    const question = new Question();
-
-    Object.assign(question, {
+  async create({
+    title,
+    linkedAnswerId,
+  }: ICreateQuestionDTO): Promise<Question> {
+    const question = this.repository.create({
       title,
       linked_answer_id: linkedAnswerId,
-      created_at: new Date(),
     });
 
-    this.questions.push(question);
+    await this.repository.save(question);
 
     return question;
   }
 
-  findByLinkedAnswer({
+  async findByLinkedAnswer({
     linkedAnswerId,
-  }: IFindByLinkedAnswerDTO): Question | undefined {
-    return this.questions.find(
-      (question) => question.linked_answer_id === linkedAnswerId
-    );
+  }: IFindByLinkedAnswerDTO): Promise<Question | undefined> {
+    const question = await this.repository.findOne({
+      linked_answer_id: linkedAnswerId,
+    });
+
+    return question;
   }
 
-  listAll(): Question[] {
-    return this.questions;
+  async listAll(): Promise<Question[]> {
+    const questions = await this.repository.find();
+    return questions;
   }
 }
 

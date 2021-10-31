@@ -1,15 +1,21 @@
-import { Question } from '../../model/Question';
+import { inject, injectable } from 'tsyringe';
+
+import { Question } from '../../entities/Question';
 import { IQuestionsRepository } from '../../repositories/IQuestionsRepository';
 
 interface IRequest {
   title: string;
 }
 
+@injectable()
 class CreateQuestionUseCase {
-  constructor(private questionsRepository: IQuestionsRepository) {}
+  constructor(
+    @inject('QuestionsRepository')
+    private questionsRepository: IQuestionsRepository
+  ) {}
 
-  execute({ title }: IRequest): Question {
-    const question = this.questionsRepository.create({ title });
+  async execute({ title }: IRequest): Promise<Question> {
+    const question = await this.questionsRepository.create({ title });
     return question;
   }
 }
