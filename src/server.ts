@@ -1,9 +1,13 @@
+import 'reflect-metadata';
+
 import cors from 'cors';
 import express from 'express';
 
 import { router } from './routes';
 
 import './database';
+
+import './shared/container';
 
 const app = express();
 

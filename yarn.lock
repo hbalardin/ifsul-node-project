@@ -1673,10 +1673,14 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
 <<<<<<< HEAD
+object-assign@^4, object-assign@^4.0.1:
+=======
+<<<<<<< HEAD
 object-assign@^4.0.1:
 =======
 object-assign@^4:
 >>>>>>> 51da74910dbaf2f30d06fb50c979239734033476
+>>>>>>> f70599eb3caeb6101ffeb68a8c1952bd719172d0
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
   integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
