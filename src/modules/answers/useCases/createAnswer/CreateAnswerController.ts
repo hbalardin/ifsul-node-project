@@ -5,17 +5,21 @@ import { CreateAnswerUseCase } from './CreateAnswerUseCase';
 
 class CreateAnswerController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { title, description, questionId } = request.body;
+    try {
+      const { title, description, questionId } = request.body;
 
-    const createAnswerUseCase = container.resolve(CreateAnswerUseCase);
+      const createAnswerUseCase = container.resolve(CreateAnswerUseCase);
 
-    const answer = await createAnswerUseCase.execute({
-      title,
-      description,
-      questionId,
-    });
+      const answer = await createAnswerUseCase.execute({
+        title,
+        description,
+        questionId,
+      });
 
-    return response.json(answer);
+      return response.json(answer);
+    } catch (error) {
+      return response.status(500).json(error);
+    }
   }
 }
 

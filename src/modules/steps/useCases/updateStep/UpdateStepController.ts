@@ -5,14 +5,18 @@ import { UpdateStepUseCase } from './UpdateStepUseCase';
 
 class UpdateStepController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
-    const { answerId } = request.body;
+    try {
+      const { id } = request.params;
+      const { answerId } = request.body;
 
-    const updateStepUseCase = container.resolve(UpdateStepUseCase);
+      const updateStepUseCase = container.resolve(UpdateStepUseCase);
 
-    const step = await updateStepUseCase.execute({ id, answerId });
+      const step = await updateStepUseCase.execute({ id, answerId });
 
-    return response.json(step);
+      return response.json(step);
+    } catch (error) {
+      return response.status(500).json(error);
+    }
   }
 }
 

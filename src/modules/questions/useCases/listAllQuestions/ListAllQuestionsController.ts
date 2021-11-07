@@ -5,11 +5,17 @@ import { ListAllQuestionsUseCase } from './ListAllQuestionsUseCase';
 
 class ListAllQuestionsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const listAllQuestionsUseCase = container.resolve(ListAllQuestionsUseCase);
+    try {
+      const listAllQuestionsUseCase = container.resolve(
+        ListAllQuestionsUseCase
+      );
 
-    const questions = await listAllQuestionsUseCase.execute();
+      const questions = await listAllQuestionsUseCase.execute();
 
-    return response.json(questions);
+      return response.json(questions);
+    } catch (error) {
+      return response.status(500).json(error);
+    }
   }
 }
 

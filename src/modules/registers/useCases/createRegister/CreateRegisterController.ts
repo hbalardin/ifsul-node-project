@@ -5,11 +5,15 @@ import { CreateRegisterUseCase } from './CreateRegisterUseCase';
 
 class CreateRegisterController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const createRegisterUseCase = container.resolve(CreateRegisterUseCase);
+    try {
+      const createRegisterUseCase = container.resolve(CreateRegisterUseCase);
 
-    const register = await createRegisterUseCase.execute();
+      const register = await createRegisterUseCase.execute();
 
-    return response.json(register);
+      return response.json(register);
+    } catch (error) {
+      return response.status(500).json(error);
+    }
   }
 }
 
