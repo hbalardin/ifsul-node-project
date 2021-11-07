@@ -5,6 +5,7 @@ import {
   ICreateQuestionDTO,
   IFindByLinkedAnswerDTO,
   IQuestionsRepository,
+  IUpdateQuestionDTO,
 } from '../IQuestionsRepository';
 
 class QuestionsRepository implements IQuestionsRepository {
@@ -41,6 +42,20 @@ class QuestionsRepository implements IQuestionsRepository {
   async listAll(): Promise<Question[]> {
     const questions = await this.repository.find();
     return questions;
+  }
+
+  async update({
+    id,
+    title,
+    linkedAnswerId,
+  }: IUpdateQuestionDTO): Promise<Question> {
+    const question = await this.repository.save({
+      id,
+      title,
+      linked_answer_id: linkedAnswerId,
+    });
+
+    return question;
   }
 }
 
