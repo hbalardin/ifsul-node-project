@@ -6,6 +6,7 @@ import {
   IAnswersRepository,
   IFindByIdDTO,
   IListByQuestionDTO,
+  IUpdateAnswerDTO,
 } from '../IAnswersRepository';
 
 class AnswersRepository implements IAnswersRepository {
@@ -45,6 +46,22 @@ class AnswersRepository implements IAnswersRepository {
   async listByQuestion({ questionId }: IListByQuestionDTO): Promise<Answer[]> {
     const answers = await this.repository.find({ question_id: questionId });
     return answers;
+  }
+
+  async update({
+    id,
+    title,
+    description,
+    questionId,
+  }: IUpdateAnswerDTO): Promise<Answer> {
+    const answer = await this.repository.save({
+      id,
+      title,
+      description,
+      questionId,
+    });
+
+    return answer;
   }
 }
 
