@@ -3,6 +3,7 @@ import { getRepository, Repository } from 'typeorm';
 import { User } from '../../entities/User';
 import {
   ICreateUserDTO,
+  IFindByIdDTO,
   IFindByUsernameDTO,
   IUsersRepository,
 } from '../IUsersRepository';
@@ -21,6 +22,11 @@ export class UsersRepository implements IUsersRepository {
 
   async findByUsername({ username }: IFindByUsernameDTO): Promise<User> {
     const user = this.repository.findOne({ username });
+    return user;
+  }
+
+  async findById({ id }: IFindByIdDTO): Promise<User> {
+    const user = this.repository.findOne(id);
     return user;
   }
 }
