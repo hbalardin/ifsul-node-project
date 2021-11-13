@@ -3,6 +3,7 @@ import { Router } from 'express';
 import {
   CreateQuestionController,
   CreateQuestionFromAnswerController,
+  GetQuestionByIdController,
   ListAllQuestionsController,
   UpdateQuestionController,
 } from '../modules/questions/useCases';
@@ -12,11 +13,14 @@ const questionsRoutes = Router();
 const createQuestionController = new CreateQuestionController();
 const createQuestionFromAnswerController =
   new CreateQuestionFromAnswerController();
+const getQuestionByIdController = new GetQuestionByIdController();
 const listAllQuestionsController = new ListAllQuestionsController();
 
 const updateQuestionController = new UpdateQuestionController();
 
 questionsRoutes.get('/', listAllQuestionsController.handle);
+
+questionsRoutes.get('/:id', getQuestionByIdController.handle);
 
 questionsRoutes.post('/', createQuestionController.handle);
 

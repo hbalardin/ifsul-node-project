@@ -14,6 +14,11 @@ interface IListByQuestionDTO {
   questionId: string;
 }
 
+interface ILinkQuestionDTO {
+  id: string;
+  questionId: string;
+}
+
 interface IUpdateAnswerDTO {
   id: string;
   title: string;
@@ -26,6 +31,7 @@ interface IAnswersRepository {
   findById({ id }: IFindByIdDTO): Promise<Answer | undefined>;
   listAll(): Promise<Answer[]>;
   listByQuestion({ questionId }: IListByQuestionDTO): Promise<Answer[]>;
+  linkQuestion({ id, questionId }: ILinkQuestionDTO): Promise<Answer>;
   update({
     id,
     title,
@@ -40,4 +46,5 @@ export {
   IFindByIdDTO,
   IListByQuestionDTO,
   IUpdateAnswerDTO,
+  ILinkQuestionDTO,
 };

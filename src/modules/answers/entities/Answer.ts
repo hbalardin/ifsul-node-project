@@ -31,6 +31,9 @@ class Answer {
   @Column()
   question_id: string;
 
+  @Column()
+  linked_question_id?: string;
+
   constructor() {
     if (!this.id) this.id = uuidV4();
   }

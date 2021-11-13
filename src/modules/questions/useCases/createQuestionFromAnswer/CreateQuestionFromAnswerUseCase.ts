@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
+import { IAnswersRepository } from '../../../answers/repositories/IAnswersRepository';
 import { Question } from '../../entities/Question';
 import { IQuestionsRepository } from '../../repositories/IQuestionsRepository';
 
@@ -12,7 +13,9 @@ interface IRequest {
 class CreateQuestionFromAnswerUseCase {
   constructor(
     @inject('QuestionsRepository')
-    private questionsRepository: IQuestionsRepository
+    private questionsRepository: IQuestionsRepository,
+    @inject('AnswersRepository')
+    private answersRepository: IAnswersRepository
   ) {}
 
   async execute({ linkedAnswerId, title }: IRequest): Promise<Question> {
@@ -26,6 +29,12 @@ class CreateQuestionFromAnswerUseCase {
       linkedAnswerId,
       title,
     });
+
+    await this.answersRepository.linkQuestion({
+      id: linkedAnswerId,
+      questionId: question.id,
+    });
+
     return question;
   }
 }

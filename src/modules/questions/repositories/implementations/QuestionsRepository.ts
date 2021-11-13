@@ -3,6 +3,7 @@ import { Repository, getRepository } from 'typeorm';
 import { Question } from '../../entities/Question';
 import {
   ICreateQuestionDTO,
+  IFindByIdDTO,
   IFindByLinkedAnswerDTO,
   IQuestionsRepository,
   IUpdateQuestionDTO,
@@ -26,6 +27,11 @@ class QuestionsRepository implements IQuestionsRepository {
 
     await this.repository.save(question);
 
+    return question;
+  }
+
+  async findById({ id }: IFindByIdDTO): Promise<Question | undefined> {
+    const question = await this.repository.findOne(id);
     return question;
   }
 
