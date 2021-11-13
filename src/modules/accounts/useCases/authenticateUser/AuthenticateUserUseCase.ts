@@ -2,6 +2,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '../../../../errors/AppError';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 
 interface IRequest {
@@ -29,11 +30,11 @@ class AuthenticateUserUseCase {
       username,
     });
 
-    if (!user) throw new Error('Username or password invalid!');
+    if (!user) throw new AppError('Username or password invalid!');
 
     const passwordMatch = await compare(password, user.password);
 
-    if (!passwordMatch) throw new Error('Username or password invalid!');
+    if (!passwordMatch) throw new AppError('Username or password invalid!');
 
     const token = sign({}, '31057cbc297f0b190a7f214ed13f0d6a', {
       subject: user.id,

@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '../../../../errors/AppError';
 import { IAnswersRepository } from '../../../answers/repositories/IAnswersRepository';
 import { IQuestionsRepository } from '../../../questions/repositories/IQuestionsRepository';
 import { Step } from '../../entities/Step';
@@ -24,13 +25,13 @@ class UpdateStepUseCase {
   async execute({ id, answerId }: IRequest): Promise<Step> {
     const existentStep = await this.stepsRepository.findById({ id });
 
-    if (!existentStep) throw new Error('Step does not exists!');
+    if (!existentStep) throw new AppError('Step does not exists!');
 
     const selectedAnswer = await this.answersRepository.findById({
       id: answerId,
     });
 
-    if (!selectedAnswer) throw new Error('Answer does not exists!');
+    if (!selectedAnswer) throw new AppError('Answer does not exists!');
 
     const nextQuestion = await this.questionsRepository.findByLinkedAnswer({
       linkedAnswerId: answerId,

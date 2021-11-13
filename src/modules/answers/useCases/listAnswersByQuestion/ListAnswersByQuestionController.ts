@@ -5,21 +5,17 @@ import { ListAnswersByQuestionUseCase } from './ListAnswersByQuestionUseCase';
 
 class ListAnswersByQuestionController {
   async handle(request: Request, response: Response): Promise<Response> {
-    try {
-      const { questionId } = request.params;
+    const { questionId } = request.params;
 
-      const listAnswersByQuestionUseCase = container.resolve(
-        ListAnswersByQuestionUseCase
-      );
+    const listAnswersByQuestionUseCase = container.resolve(
+      ListAnswersByQuestionUseCase
+    );
 
-      const answers = await listAnswersByQuestionUseCase.execute({
-        questionId,
-      });
+    const answers = await listAnswersByQuestionUseCase.execute({
+      questionId,
+    });
 
-      return response.json(answers);
-    } catch (error) {
-      return response.status(500).json(error);
-    }
+    return response.json(answers);
   }
 }
 

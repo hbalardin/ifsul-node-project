@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '../../../../errors/AppError';
 import { IAnswersRepository } from '../../../answers/repositories/IAnswersRepository';
 import { Question } from '../../entities/Question';
 import { IQuestionsRepository } from '../../repositories/IQuestionsRepository';
@@ -23,7 +24,7 @@ class CreateQuestionFromAnswerUseCase {
       await this.questionsRepository.findByLinkedAnswer({ linkedAnswerId });
 
     if (hasQuestionLinkedToAnswer)
-      throw new Error('Already exists a question linked to this answer');
+      throw new AppError('Already exists a question linked to this answer');
 
     const question = await this.questionsRepository.create({
       linkedAnswerId,

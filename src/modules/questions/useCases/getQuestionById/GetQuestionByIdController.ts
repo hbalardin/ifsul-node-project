@@ -5,17 +5,13 @@ import { GetQuestionByIdUseCase } from './GetQuestionByIdUseCase';
 
 class GetQuestionByIdController {
   async handle(request: Request, response: Response): Promise<Response> {
-    try {
-      const { id } = request.params;
+    const { id } = request.params;
 
-      const getQuestionByIdUseCase = container.resolve(GetQuestionByIdUseCase);
+    const getQuestionByIdUseCase = container.resolve(GetQuestionByIdUseCase);
 
-      const questions = await getQuestionByIdUseCase.execute({ id });
+    const questions = await getQuestionByIdUseCase.execute({ id });
 
-      return response.json(questions);
-    } catch (error) {
-      return response.status(500).json(error);
-    }
+    return response.json(questions);
   }
 }
 
