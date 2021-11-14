@@ -4,6 +4,7 @@ import { Router } from 'express';
 import {
   CreateQuestionController,
   CreateQuestionFromAnswerController,
+  GetPreviousQuestionController,
   GetQuestionByIdController,
   ListAllQuestionsController,
   UpdateQuestionController,
@@ -15,6 +16,7 @@ const createQuestionController = new CreateQuestionController();
 const createQuestionFromAnswerController =
   new CreateQuestionFromAnswerController();
 const getQuestionByIdController = new GetQuestionByIdController();
+const getPreviousQuestionController = new GetPreviousQuestionController();
 const listAllQuestionsController = new ListAllQuestionsController();
 
 const updateQuestionController = new UpdateQuestionController();
@@ -23,6 +25,11 @@ const updateQuestionController = new UpdateQuestionController();
 questionsRoutes.get('/', listAllQuestionsController.handle);
 
 questionsRoutes.get('/:id', getQuestionByIdController.handle);
+
+questionsRoutes.get(
+  '/previous/:currentQuestionId',
+  getPreviousQuestionController.handle
+);
 
 questionsRoutes.post('/', createQuestionController.handle);
 
