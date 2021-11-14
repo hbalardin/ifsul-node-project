@@ -1,5 +1,7 @@
 import { container } from 'tsyringe';
 
+import { UsersRepository } from '../../modules/accounts/repositories/implementations/UsersRepository';
+import { IUsersRepository } from '../../modules/accounts/repositories/IUsersRepository';
 import { IAnswersRepository } from '../../modules/answers/repositories/IAnswersRepository';
 import { AnswersRepository } from '../../modules/answers/repositories/implementations/AnswersRepository';
 import { QuestionsRepository } from '../../modules/questions/repositories/implementations/QuestionsRepository';
@@ -27,4 +29,9 @@ container.registerSingleton<IRegistersRepository>(
 container.registerSingleton<IStepsRepository>(
   'StepsRepository',
   StepsRepository
+);
+
+container.registerSingleton<IUsersRepository>(
+  'UsersRepository',
+  UsersRepository
 );

@@ -5,6 +5,10 @@ interface ICreateQuestionDTO {
   linkedAnswerId?: string;
 }
 
+interface IFindByIdDTO {
+  id: string;
+}
+
 interface IFindByLinkedAnswerDTO {
   linkedAnswerId: string;
 }
@@ -17,6 +21,7 @@ interface IUpdateQuestionDTO {
 
 interface IQuestionsRepository {
   create({ title, linkedAnswerId }: ICreateQuestionDTO): Promise<Question>;
+  findById({ id }: IFindByIdDTO): Promise<Question>;
   findByLinkedAnswer({
     linkedAnswerId,
   }: IFindByLinkedAnswerDTO): Promise<Question | undefined>;
@@ -27,6 +32,7 @@ interface IQuestionsRepository {
 export {
   IQuestionsRepository,
   ICreateQuestionDTO,
+  IFindByIdDTO,
   IFindByLinkedAnswerDTO,
   IUpdateQuestionDTO,
 };

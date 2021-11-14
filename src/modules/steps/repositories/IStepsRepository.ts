@@ -5,21 +5,44 @@ interface ICreateStepDTO {
   questionId: string;
 }
 
+interface IDeleteDTO {
+  id: string;
+}
+
 interface IFindByIdDTO {
   id: string;
 }
 
-interface IUpdateStepDTO {
+interface IFindPreviousStepDTO {
+  id: string;
+}
+
+interface ILinkAnswerStepDTO {
   id: string;
   answerId: string;
   nextStepId?: string;
 }
 
-interface IStepsRepository {
-  create({ questionId, registerId }: ICreateStepDTO): Promise<Step>;
-  findById({ id }: IFindByIdDTO): Promise<Step>;
-  listAll(): Promise<Step[]>;
-  update({ id, answerId, nextStepId }: IUpdateStepDTO): Promise<Step>;
+interface IUnlinkAnswerStepDTO {
+  id: string;
 }
 
-export { IStepsRepository, ICreateStepDTO, IUpdateStepDTO, IFindByIdDTO };
+interface IStepsRepository {
+  create({ questionId, registerId }: ICreateStepDTO): Promise<Step>;
+  delete({ id }: IDeleteDTO): Promise<void>;
+  findById({ id }: IFindByIdDTO): Promise<Step>;
+  findPreviousStep({ id }: IFindPreviousStepDTO): Promise<Step>;
+  linkAnswer({ id, answerId, nextStepId }: ILinkAnswerStepDTO): Promise<Step>;
+  listAll(): Promise<Step[]>;
+  unlinkAnswer({ id }: IUnlinkAnswerStepDTO): Promise<Step>;
+}
+
+export {
+  IStepsRepository,
+  ICreateStepDTO,
+  IDeleteDTO,
+  IFindByIdDTO,
+  IFindPreviousStepDTO,
+  ILinkAnswerStepDTO,
+  IUnlinkAnswerStepDTO,
+};

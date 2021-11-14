@@ -5,23 +5,19 @@ import { CreateQuestionFromAnswerUseCase } from './CreateQuestionFromAnswerUseCa
 
 class CreateQuestionFromAnswerController {
   async handle(request: Request, response: Response): Promise<Response> {
-    try {
-      const { linkedAnswerId } = request.params;
-      const { title } = request.body;
+    const { linkedAnswerId } = request.params;
+    const { title } = request.body;
 
-      const createQuestionFromAnswerUseCase = container.resolve(
-        CreateQuestionFromAnswerUseCase
-      );
+    const createQuestionFromAnswerUseCase = container.resolve(
+      CreateQuestionFromAnswerUseCase
+    );
 
-      const question = await createQuestionFromAnswerUseCase.execute({
-        linkedAnswerId,
-        title,
-      });
+    const question = await createQuestionFromAnswerUseCase.execute({
+      linkedAnswerId,
+      title,
+    });
 
-      return response.json(question);
-    } catch (error) {
-      return response.status(500).json(error);
-    }
+    return response.json(question);
   }
 }
 

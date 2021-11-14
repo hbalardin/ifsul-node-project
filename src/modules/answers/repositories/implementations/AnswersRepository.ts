@@ -7,6 +7,7 @@ import {
   IFindByIdDTO,
   IListByQuestionDTO,
   IUpdateAnswerDTO,
+  ILinkQuestionDTO,
 } from '../IAnswersRepository';
 
 class AnswersRepository implements IAnswersRepository {
@@ -46,6 +47,17 @@ class AnswersRepository implements IAnswersRepository {
   async listByQuestion({ questionId }: IListByQuestionDTO): Promise<Answer[]> {
     const answers = await this.repository.find({ question_id: questionId });
     return answers;
+  }
+
+  async linkQuestion({ id, questionId }: ILinkQuestionDTO): Promise<Answer> {
+    const answer = await this.repository.findOne(id);
+
+    const updatedAnswer = await this.repository.save({
+      ...answer,
+      linked_question_id: questionId,
+    });
+
+    return updatedAnswer;
   }
 
   async update({
