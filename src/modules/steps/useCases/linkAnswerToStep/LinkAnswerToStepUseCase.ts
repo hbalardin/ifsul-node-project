@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateStepUseCase {
+class LinkAnswerToStepUseCase {
   constructor(
     @inject('StepsRepository')
     private stepsRepository: IStepsRepository,
@@ -45,7 +45,7 @@ class UpdateStepUseCase {
       });
     }
 
-    const updatedStep = await this.stepsRepository.update({
+    const updatedStep = await this.stepsRepository.linkAnswer({
       id,
       answerId,
       nextStepId: nextStep?.id,
@@ -55,4 +55,4 @@ class UpdateStepUseCase {
   }
 }
 
-export { UpdateStepUseCase };
+export { LinkAnswerToStepUseCase };

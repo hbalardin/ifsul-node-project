@@ -2,16 +2,19 @@ import { Router } from 'express';
 
 import {
   CreateStepController,
-  UpdateStepController,
+  LinkAnswerToStepController,
+  UndoStepController,
 } from '../modules/steps/useCases';
 
 const stepsRoutes = Router();
 
 const createStepController = new CreateStepController();
-const updateStepController = new UpdateStepController();
+const linkAnswerToStepController = new LinkAnswerToStepController();
+const undoStepController = new UndoStepController();
 
 stepsRoutes.post('/', createStepController.handle);
 
-stepsRoutes.put('/:id', updateStepController.handle);
+stepsRoutes.put('/:id/linkAnswer/:answerId', linkAnswerToStepController.handle);
+stepsRoutes.put('/:id/undo/', undoStepController.handle);
 
 export { stepsRoutes };
