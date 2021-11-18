@@ -8,6 +8,7 @@ import {
   IFindPreviousStepDTO,
   IStepsRepository,
   ILinkAnswerStepDTO,
+  IListByRegisterDTO,
 } from '../IStepsRepository';
 
 class StepsRepository implements IStepsRepository {
@@ -44,6 +45,13 @@ class StepsRepository implements IStepsRepository {
 
   async listAll(): Promise<Step[]> {
     const steps = await this.repository.find();
+    return steps;
+  }
+
+  async listByRegister({ registerId }: IListByRegisterDTO): Promise<Step[]> {
+    const steps = await this.repository.find({
+      where: { register_id: registerId },
+    });
     return steps;
   }
 
