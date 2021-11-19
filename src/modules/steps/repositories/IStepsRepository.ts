@@ -17,6 +17,10 @@ interface IFindPreviousStepDTO {
   id: string;
 }
 
+interface IListByRegisterDTO {
+  registerId: string;
+}
+
 interface ILinkAnswerStepDTO {
   id: string;
   answerId: string;
@@ -34,6 +38,7 @@ interface IStepsRepository {
   findPreviousStep({ id }: IFindPreviousStepDTO): Promise<Step>;
   linkAnswer({ id, answerId, nextStepId }: ILinkAnswerStepDTO): Promise<Step>;
   listAll(): Promise<Step[]>;
+  listByRegister({ registerId }: IListByRegisterDTO): Promise<Step[]>;
   unlinkAnswer({ id }: IUnlinkAnswerStepDTO): Promise<Step>;
 }
 
@@ -43,6 +48,7 @@ export {
   IDeleteDTO,
   IFindByIdDTO,
   IFindPreviousStepDTO,
+  IListByRegisterDTO,
   ILinkAnswerStepDTO,
   IUnlinkAnswerStepDTO,
 };
